@@ -6,12 +6,11 @@ Program Details: <Program Description Here>
 
 mod ui;
 mod utils;
-//use crate::ui::grid::draw_grid;
+use crate::ui::grid::draw_grid;
 use crate::ui::label::Label;
 use crate::ui::still_image::StillImage;
 use crate::ui::text_button::TextButton;
-use crate::utils::preload_image::GifLoadingScreenInfo;
-use crate::utils::preload_image::LoadingScreenOptions; // If you want to customize the loading screen
+
 use crate::utils::preload_image::TextureManager;
 use macroquad::prelude::*; // If you want to add animated GIFs to loading screen
 
@@ -36,7 +35,7 @@ async fn main() {
     let btn_job = TextButton::new(450.0, 600.0, 150.0, 60.0, "Job", BLUE, GREEN, 30);
     let btn_number = TextButton::new(650.0, 600.0, 150.0, 60.0, "Bus Number", BLUE, GREEN, 30);
     let btn_cw = TextButton::new(850.0, 600.0, 150.0, 60.0, "Text", BLUE, GREEN, 30);
-    let btn_exit = TextButton::new(1050.0, 600.0, 150.0, 60.0, "Exit", BLUE, GREEN, 30);
+    let btn_exit = TextButton::new(1050.0, 50.0, 150.0, 60.0, "Exit", BLUE, GREEN, 30);
 
     let mut img = StillImage::new(
         "assets/number.png",
@@ -53,7 +52,7 @@ async fn main() {
    // Preload a list of textures
     let tm = TextureManager::new();
 
-    tm.preload_with_loading_screen(&["assets/image1.png","assets/image2.png"], None, None).await;
+    tm.preload_with_loading_screen(&["assets/number.png", "assets/idk.png", "assets/kpr.png", "assets/krumbs.png", "assets/cw.png", "assets/Layne.png"], None, None).await;
 
     let mut lbl_out = Label::new("Hello\nWorld", 50.0, 50.0, 60);
     lbl_out.with_colors(WHITE, Some(DARKGRAY));
@@ -61,24 +60,27 @@ async fn main() {
 
     loop {
         clear_background(GRAY);
-        //draw_grid(50.0, WHITE);
+        draw_grid(50.0, WHITE);
         img.draw();
         lbl_out.draw();
 
         if btn_name.click() {
             lbl_out.set_text("Layne");
-        }
+        img.set_image("assets/Layne.png").await;}
         if btn_school.click() {
             lbl_out.set_text("BHS");
+            img.set_image("assets/kpr.png").await;
         }
         if btn_job.click() {
             lbl_out.set_text("Krubms");
+            img.set_image("assets/krumbs.png").await;
         }
         if btn_number.click() {
             lbl_out.set_text("867-5309");
-        }
+        img.set_image("assets/number.png").await;}
         if btn_cw.click() {
             lbl_out.set_text("Co0nnor");
+            img.set_image("assets/cw.png").await;
         }
         if btn_exit.click() {
             break;
